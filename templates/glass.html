@@ -44,7 +44,11 @@
 	<!-- Set script root-->
 	<script type=text/javascript>
 		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-	</script>
+    </script>
+    
+    <!-- Set favicon and Apple touch device home screen icon-->
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png">
 
 	<style>
 		button {
