@@ -104,6 +104,12 @@ let pitot_heat;
 let eng_anti_ice;
 let structural_deice;
 
+let ambient_temperature;
+let ambient_pressure;
+let ambient_visibility;
+let ambient_wind_direction;
+let ambient_wind_velocity;
+
 // Maps Size Fix Function
 let map_size_fix;
 let map_size_fix_mod;
@@ -683,6 +689,13 @@ function getSimulatorData() {
 		landing_vs3 = data.LANDING_VS3;
 		landing_t3 = data.LANDING_T3;
 		sim_rate = data.SIMULATION_RATE;
+	    
+	    	//Weather
+		ambient_temperature = data.AMBIENT_TEMPERATURE;
+		ambient_pressure = data.AMBIENT_PRESSURE;
+		ambient_visibility = data.AMBIENT_VISIBILITY;
+		ambient_wind_direction = data.AMBIENT_WIND_DIRECTION;
+		ambient_wind_velocity = data.AMBIENT_WIND_VELOCITY;
     });
     return false;
 }
@@ -758,6 +771,13 @@ function displayData() {
 	$("#landing-vs3").text(landing_vs3);
 	$("#landing-t3").text(landing_t3);
 	$("#sim-rate").text(sim_rate);
+	
+	//WX
+	$("#ambient-temperature").text(ambient_temperature);
+	$("#ambient-pressure").text(ambient_pressure);
+	$("#ambient-visibility").text(ambient_visibility);
+	$("#ambient-wind-direction").text(ambient_wind_direction);
+	$("#ambient-wind-velocity").text(ambient_wind_velocity);
 }
 
 function checkAndUpdateButton(buttonName, variableToCheck, onText="On", offText="Off") {
