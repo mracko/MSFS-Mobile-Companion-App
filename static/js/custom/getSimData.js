@@ -790,12 +790,7 @@ function displayData() {
 	$(".weather-rose-north .weather-needle").css({transform: "rotate(" + ambient_wind_direction + "deg)"});
 	$(".weather-rose-relative .weather-needle").css({transform: "rotate(" + Math.round(ambient_wind_direction - compass) + "deg)"});
 	$(".weather-rose-north .weather-subtext").text(ambient_wind_direction + "°/" + ambient_wind_velocity);
-
-	if ((ambient_wind_direction - compass) < 0) {
-		aircraft_wind_direction = ambient_wind_direction - compass + 360;
-	}
-
-	$(".weather-rose-relative .weather-subtext").text(Math.round(aircraft_wind_direction) + "°/" + ambient_wind_velocity);
+	$(".weather-rose-relative .weather-subtext").text(Math.round((ambient_wind_direction - compass + 360) % 360) + "°/" + ambient_wind_velocity);
 	$("#ambient-wind-velocity").text(ambient_wind_velocity);
 }
 
