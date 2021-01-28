@@ -107,8 +107,12 @@ let structural_deice;
 let ambient_temperature;
 let ambient_pressure;
 let ambient_visibility;
+let sea_level_pressure;
 let ambient_wind_direction;
 let ambient_wind_velocity;
+let aircraft_wind_x;
+let aircraft_wind_z;
+let aircraft_wind_direction;
 
 // Maps Size Fix Function
 let map_size_fix;
@@ -696,6 +700,9 @@ function getSimulatorData() {
 		ambient_visibility = data.AMBIENT_VISIBILITY;
 		ambient_wind_direction = data.AMBIENT_WIND_DIRECTION;
 		ambient_wind_velocity = data.AMBIENT_WIND_VELOCITY;
+		sea_level_pressure = data.SEA_LEVEL_PRESSURE;
+		aircraft_wind_x = data.AIRCRAFT_WIND_X;
+		aircraft_wind_z = data.AIRCRAFT_WIND_Z;
     });
     return false;
 }
@@ -775,12 +782,20 @@ function displayData() {
 	//WX
 	$("#ambient-temperature").text(ambient_temperature);
 	$("#ambient-pressure").text(ambient_pressure);
+	$("#sea-level-pressure").text(sea_level_pressure);
 	$("#ambient-visibility").text(ambient_visibility);
 	$("#ambient-wind-direction").text(ambient_wind_direction);
+	$("#aircraft-wind-x").text(aircraft_wind_x);
+	$("#aircraft-wind-z").text(aircraft_wind_z);
 	$(".weather-rose-north .weather-needle").css({transform: "rotate(" + ambient_wind_direction + "deg)"});
-	$(".weather-rose-relative .weather-needle").css({transform: "rotate(" + (compass - ambient_wind_direction + 360) % 360 + "deg)"});
-	$(".weather-rose-north .weather-subtext").text(ambient_wind_direction + "/" + ambient_wind_velocity);
-	$(".weather-rose-relative .weather-subtext").text(Math.round(compass - ambient_wind_direction) + "/" + ambient_wind_velocity);
+	$(".weather-rose-relative .weather-needle").css({transform: "rotate(" + Math.round(ambient_wind_direction - compass) + "deg)"});
+	$(".weather-rose-north .weather-subtext").text(ambient_wind_direction + "°/" + ambient_wind_velocity);
+
+	if ((ambient_wind_direction - compass) < 0) {
+		aircraft_wind_direction = ambient_wind_direction - compass + 360;
+	}
+
+	$(".weather-rose-relative .weather-subtext").text(Math.round(aircraft_wind_direction) + "°/" + ambient_wind_velocity);
 	$("#ambient-wind-velocity").text(ambient_wind_velocity);
 }
 
