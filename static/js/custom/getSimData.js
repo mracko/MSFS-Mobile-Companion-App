@@ -778,7 +778,7 @@ function displayData() {
 	$("#ambient-visibility").text(ambient_visibility);
 	$("#ambient-wind-direction").text(ambient_wind_direction);
 	$(".weather-rose-north .weather-needle").css({transform: "rotate(" + ambient_wind_direction + "deg)"});
-	$(".weather-rose-relative .weather-needle").css({transform: "rotate(" + compass - ambient_wind_direction + "deg)"});
+	$(".weather-rose-relative .weather-needle").css({transform: "rotate(" + (compass - ambient_wind_direction + 360) % 360 + "deg)"});
 	$(".weather-rose-north .weather-subtext").text(ambient_wind_direction + "/" + ambient_wind_velocity);
 	$(".weather-rose-relative .weather-subtext").text(Math.round(compass - ambient_wind_direction) + "/" + ambient_wind_velocity);
 	$("#ambient-wind-velocity").text(ambient_wind_velocity);

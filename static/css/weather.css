@@ -25,7 +25,6 @@
     position: absolute;
     left: 0;
     top: 0;
-    transform: rotate(45deg);
 }
 .weather-rose > .weather-needle::after {
     content: '';
