@@ -113,29 +113,35 @@ def flask_thread_func(threadname):
 
     # START: Find my plane routes
 
-    @app.route('/findmyplane/status/<status_to_set>', methods=["GET", "POST"])
+    @app.route('/findmyplane/status', endpoint="check")
+    @app.route('/findmyplane/status/set/<status_to_set>', endpoint="set")
     # This route allows the front end to query and set the connection status
-    def findmyplane_set_status(status_to_set = "CHECK"):
+    def findmyplane_set_status(status_to_set = "check"):
 
-        # Returns the current status, the public ident and the URL link through a GET request
-        if status_to_set.upper() == "CHECK":
+        if request.endpoint == "check":
             return jsonify({'status': findmyplane_plugin.connection_status(),
                             'ident_public_key': findmyplane_plugin.ident_public_key,
+                            'ident_private_key': findmyplane_plugin.ident_private_key,
                             'url_to_view': findmyplane_plugin.url_to_view()
                             })
 
         # Allows the front end to set the connection status. Passing "connected" will create a new plane instance.
         # Passing "disconnected" will disconnect from the instance, which will prompt the server to delete it in due
         # course if it doesn't receive more data.
-        if status_to_set.upper() == "DISCONNECTED":
+        if status_to_set.lower() == "disconnected":
             findmyplane_plugin.disconnect_from_plane_instance()
             return jsonify({'status': 'disconnected'})
 
-        if status_to_set.upper() == "CONNECTED":
+        if status_to_set.lower() == "connected":
             findmyplane_connection_attempt = findmyplane_plugin.request_new_plane_instance(client="Mobile Companion App") #Let me know if you are happy with this client description
             if findmyplane_connection_attempt['status'] == "success":
                 print ("success")
-                return jsonify({'status': 'connected'})
+                return jsonify({
+                    'status': 'connected',
+                    'ident_public_key': findmyplane_plugin.ident_public_key,
+                    'ident_private_key': findmyplane_plugin.ident_private_key,
+                    'url_to_view': findmyplane_plugin.url_to_view()
+                })
             else:
                 print ("failed")
                 return jsonify({'status': 'error'})
