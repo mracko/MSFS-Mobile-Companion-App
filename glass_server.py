@@ -113,7 +113,7 @@ def flask_thread_func(threadname):
 
     # START: Find my plane routes
 
-    @app.route('/findmyplane/status', endpoint="check")
+    @app.route('/findmyplane/status/check', endpoint="check")
     @app.route('/findmyplane/status/set/<status_to_set>', endpoint="set")
     # This route allows the front end to query and set the connection status
     def findmyplane_set_status(status_to_set = "check"):
