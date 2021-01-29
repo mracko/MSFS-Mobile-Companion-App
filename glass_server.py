@@ -35,6 +35,18 @@ def flask_thread_func(threadname):
     def output_ui_variables():
         # Initialise dictionaru
         ui_friendly_dictionary["STATUS"] = "success"
+
+        # Find my plane addition - send if activated
+        if findmyplane_plugin.connection_status() == "connected":
+            findmyplane_plugin.set_plane_location(
+                current_latitude = ui_friendly_dictionary["LATITUDE"],
+                current_longitude = ui_friendly_dictionary["LONGITUDE"],
+                current_compass = ui_friendly_dictionary["MAGNETIC_COMPASS"],
+                current_altitude = ui_friendly_dictionary["INDICATED_ALTITUDE"],
+                current_speed = ui_friendly_dictionary["AIRSPEED_INDICATED"]
+            )
+            print ("Data sent to findmyplane")
+
         return jsonify(ui_friendly_dictionary)
 
     @app.route('/')
@@ -369,7 +381,7 @@ def simconnect_thread_func(threadname):
             ui_friendly_dictionary["LANDING_T2"] = landing_t2
             ui_friendly_dictionary["LANDING_VS3"] = landing_vs3
             ui_friendly_dictionary["LANDING_T3"] = landing_t3
-        
+
     while True:
         asyncio.run(ui_dictionary(ui_friendly_dictionary, previous_alt, ui_friendly_dictionary["LANDING_T1"], ui_friendly_dictionary["LANDING_VS1"], ui_friendly_dictionary["LANDING_T2"], ui_friendly_dictionary["LANDING_VS2"], ui_friendly_dictionary["LANDING_T3"], ui_friendly_dictionary["LANDING_VS3"]))
         #sleep(0.3)
