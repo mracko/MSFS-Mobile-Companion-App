@@ -140,7 +140,7 @@ def flask_thread_func(threadname):
 
     # END: Find my plane routes
 
-    app.run(host='0.0.0.0', port=4000, debug=False)
+    app.run(host='0.0.0.0', port=4000, debug=True, use_reloader=False)
 
 # SimConnect  App
 def simconnect_thread_func(threadname):
