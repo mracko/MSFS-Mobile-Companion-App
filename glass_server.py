@@ -127,16 +127,18 @@ def flask_thread_func(threadname):
         # Allows the front end to set the connection status. Passing "connected" will create a new plane instance.
         # Passing "disconnected" will disconnect from the instance, which will prompt the server to delete it in due
         # course if it doesn't receive more data.
-        if status_to_set.upper() == "disconnected":
+        if status_to_set.upper() == "DISCONNECTED":
             findmyplane_plugin.disconnect_from_plane_instance()
             return jsonify({'status': 'disconnected'})
 
-        if status_to_set.upper() == "connected":
+        if status_to_set.upper() == "CONNECTED":
             findmyplane_connection_attempt = findmyplane_plugin.request_new_plane_instance(client="Mobile Companion App") #Let me know if you are happy with this client description
             if findmyplane_connection_attempt['status'] == "success":
                 return jsonify({'status': 'connected'})
             else:
                 return jsonify({'status': 'error'})
+
+        return jsonify({'status': 'error', 'reason': 'no valid command passed'})
 
     # END: Find my plane routes
 
