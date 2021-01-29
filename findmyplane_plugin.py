@@ -71,12 +71,6 @@ def set_plane_location(current_latitude, current_longitude, current_compass, cur
     endpoint_url = "/update_plane_location"
     url = api_url + endpoint_url
 
-    if title is not None:
-        title = title.decode("utf-8")
-
-    if atc_id is not None:
-        atc_id = atc_id.decode("utf-8")
-
     values = {'ident_public_key': ident_public_key,
               'ident_private_key': ident_private_key,
               'current_latitude': current_latitude,

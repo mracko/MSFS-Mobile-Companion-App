@@ -335,9 +335,16 @@ def simconnect_thread_func(threadname):
         #ui_friendly_dictionary["PANEL_ANTI_ICE_SWITCH"] = await aq.get("PANEL_ANTI_ICE_SWITCH")
         # Sim Rate
         ui_friendly_dictionary["SIMULATION_RATE"] = await aq.get("SIMULATION_RATE")
+
         # Aircraft details
         ui_friendly_dictionary["TITLE"] = await aq.get("TITLE")
         ui_friendly_dictionary["ATC_ID"] = await aq.get("ATC_ID")
+
+        if ui_friendly_dictionary["TITLE"] is not None:
+            ui_friendly_dictionary["TITLE"] = ui_friendly_dictionary["TITLE"].decode("utf-8")
+
+        if ui_friendly_dictionary["ATC_ID"] is not None:
+            ui_friendly_dictionary["ATC_ID"] = ui_friendly_dictionary["ATC_ID"].decode("utf-8")
 
         
         
