@@ -44,8 +44,8 @@ def flask_thread_func(threadname):
                 current_compass = ui_friendly_dictionary["MAGNETIC_COMPASS"],
                 current_altitude = ui_friendly_dictionary["INDICATED_ALTITUDE"],
                 current_speed = ui_friendly_dictionary["AIRSPEED_INDICATED"],
-                title = ui_friendly_dictionary["TITLE"],
-                atc_id = ui_friendly_dictionary["ATC_ID"]
+                #title = ui_friendly_dictionary["TITLE"],
+                #atc_id = ui_friendly_dictionary["ATC_ID"]
             )
             print ("Data sent to findmyplane")
 
@@ -340,11 +340,11 @@ def simconnect_thread_func(threadname):
         ui_friendly_dictionary["TITLE"] = await aq.get("TITLE")
         ui_friendly_dictionary["ATC_ID"] = await aq.get("ATC_ID")
 
-        try:
-            ui_friendly_dictionary["TITLE"] = ui_friendly_dictionary["TITLE"].decode("utf-8")
-            ui_friendly_dictionary["ATC_ID"] = ui_friendly_dictionary["ATC_ID"].decode("utf-8")
-        except:
-            pass
+        #try:
+        #    ui_friendly_dictionary["TITLE"] = ui_friendly_dictionary["TITLE"].decode("utf-8")
+        #    ui_friendly_dictionary["ATC_ID"] = ui_friendly_dictionary["ATC_ID"].decode("utf-8")
+        #except:
+        #    pass
 
 
 
