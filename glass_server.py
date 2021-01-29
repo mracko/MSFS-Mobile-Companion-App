@@ -113,7 +113,6 @@ def flask_thread_func(threadname):
 
     # START: Find my plane routes
 
-
     @app.route('/findmyplane/status/', methods=["GET"])
     @app.route('/findmyplane/status/<status_to_set>', methods=["POST"])
     # This route allows the front end to query and set the connection status
@@ -126,9 +125,9 @@ def flask_thread_func(threadname):
                             'url_to_view': findmyplane_plugin.url_to_view()
                             })
 
-        # Allows the front end to set the connection status Passing "connected" will create a new plane instance
+        # Allows the front end to set the connection status. Passing "connected" will create a new plane instance.
         # Passing "disconnected" will disconnect from the instance, which will prompt the server to delete it in due
-        # course if it doesn't receive more data
+        # course if it doesn't receive more data.
         if request.method == "POST":
             if status_to_set == "disconnected":
                 findmyplane_plugin.disconnect_from_plane_instance()
@@ -143,7 +142,7 @@ def flask_thread_func(threadname):
 
     # END: Find my plane routes
 
-    app.run(host='0.0.0.0', port=4000, debug=True)
+    app.run(host='0.0.0.0', port=4000, debug=False)
 
 # SimConnect  App
 def simconnect_thread_func(threadname):
