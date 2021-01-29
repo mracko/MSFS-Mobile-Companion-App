@@ -113,6 +113,7 @@ def flask_thread_func(threadname):
 
     # START: Find my plane routes
 
+
     @app.route('/findmyplane/status/', methods=["GET"])
     @app.route('/findmyplane/status/<status_to_set>', methods=["POST"])
     # This route allows the front end to query and set the connection status
@@ -140,7 +141,7 @@ def flask_thread_func(threadname):
                 else:
                     return jsonify({'status': 'error'})
 
-    #END: Find my plane routes
+    # END: Find my plane routes
 
     app.run(host='0.0.0.0', port=4000, debug=True)
 
