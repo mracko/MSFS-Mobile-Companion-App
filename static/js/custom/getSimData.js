@@ -807,14 +807,14 @@ function displayData() {
 	aircraft_wind_x = Math.round(Math.sin(((ambient_wind_direction - compass + 360) % 360) / 57.2957795) * ambient_wind_velocity);
 	aircraft_wind_z = Math.round(Math.cos(((ambient_wind_direction - compass + 360) % 360) / 57.2957795) * ambient_wind_velocity);
 	if(aircraft_wind_x < 0){
-		aircraft_wind_x = '\u2190' + " " + Math.abs(aircraft_wind_x);
-	} else {
 		aircraft_wind_x = '\u2192' + " " + Math.abs(aircraft_wind_x);
+	} else {
+		aircraft_wind_x = '\u2190' + " " + Math.abs(aircraft_wind_x);
 	}
 	if(aircraft_wind_z < 0){
-		aircraft_wind_z = '\u2193' + " " + Math.abs(aircraft_wind_z);
-	} else {
 		aircraft_wind_z = '\u2191' + " " + Math.abs(aircraft_wind_z);
+	} else {
+		aircraft_wind_z = '\u2193' + " " + Math.abs(aircraft_wind_z);
 	}
 
 	$("#aircraft-wind-x").text(aircraft_wind_x);
