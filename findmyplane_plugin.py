@@ -46,7 +46,7 @@ def request_new_plane_instance(plane_title=None, atc_id=None, client=None):
     except:
         plane_object = {'status': 'error'}
 
-    return plane_object
+    return {'status': 'success'}
 
 
 def disconnect_from_plane_instance():

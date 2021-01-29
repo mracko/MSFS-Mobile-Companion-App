@@ -110,8 +110,30 @@ def flask_thread_func(threadname):
 
         return jsonify(status)
     
-    
-    
+    # Find my plane routes
+    @app.route('/findmyplane/status/', methods=["GET"])
+    @app.route('/findmyplane/status/<status_to_set>', methods=["POST"])
+    def findmyplane_set_status(status_to_set):
+
+        if request.method == "GET":
+            return jsonify({'status': findmyplane_plugin.connection_status(),
+                            'ident_public_key': findmyplane_plugin.ident_public_key,
+                            'url_to_view': findmyplane_plugin.url_to_view()
+                            })
+
+        if request.method == "POST":
+            if status_to_set == "disconnected":
+                findmyplane_plugin.disconnect_from_plane_instance()
+                return jsonify({'status': 'disconnected'})
+
+            if status_to_set == "connected":
+                findmyplane_connection_attempt = findmyplane_plugin.request_new_plane_instance(client="Mobile Companion App")
+                if findmyplane_connection_attempt['status'] == "success":
+                    return jsonify({'status': 'connected'})
+                else:
+                    return jsonify({'status': 'error'})
+
+
     app.run(host='0.0.0.0', port=4000, debug=True)
 
 # SimConnect  App
