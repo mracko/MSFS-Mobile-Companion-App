@@ -787,9 +787,9 @@ function displayData() {
 	$("#ambient-temperature-C").text(ambient_temperature);
 	$("#ambient-temperature-F").text(Math.round(ambient_temperature * (9/5) + 32));
 	$("#ambient-pressure-inHg").text(ambient_pressure);
-	$("#ambient-pressure-mbar").text(("000" + (Math.round(ambient_pressure * 33.8639))).slice(-4));
+	$("#ambient-pressure-mbar").text(Math.round(ambient_pressure * 33.8639));
 	$("#sea-level-pressure-inHg").text(Math.round(((sea_level_pressure / 33.8639) + Number.EPSILON) * 100) / 100);
-	$("#sea-level-pressure-mbar").text(("000" + sea_level_pressure).slice(-4));
+	$("#sea-level-pressure-mbar").text(sea_level_pressure);
 
 	// Ambient visibility in meters (4 digits, 0000 < 50m, 9999 >= 10000m)
 	if(ambient_visibility < 50){
