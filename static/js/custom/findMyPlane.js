@@ -3,6 +3,7 @@ let findmyplaneIdentPublicKey;
 let findmyplaneUrlToView;
 
 findmyplaneConnectionStatus = 0;
+startFindmyplaneTracking();
 
 
 function findmyplaneUpdateDisplay() {
@@ -10,15 +11,15 @@ function findmyplaneUpdateDisplay() {
     console.log (findmyplaneConnectionStatus)
     if (findmyplaneConnectionStatus === 1) {
         $("#findmyplaneMaster").removeClass("btn-danger").addClass("btn-success").html("Connected to Find My Plane");
-        $("#findmyplaneMenuButton").removeClass("btn-danger").addClass("btn-success")
+        $("#findmyplaneMenuButton").removeClass("btn-danger").addClass("btn-success");
         $("#findmyplaneConnectionStatusLabel").text("Connected to Find My Plane");
-        $("#findmyplaneIdentLabel").text(findmyplaneIdentPublicKey);
+        $("#findmyplaneIdentLabel").text(findmyplaneIdentPublicKey).attr('style', 'color: green');
         $("#findmyplaneFollowingUrlLabel").html('<a href="'+findmyplaneUrlToView+'">'+findmyplaneUrlToView+'</a>');
     } else {
         $("#findmyplaneMaster").addClass("btn-danger").removeClass("btn-success").html("Disconnected - click to connect");
         $("#findmyplaneMenuButton").addClass("btn-danger").removeClass("btn-success")
         $("#findmyplaneConnectionStatusLabel").text("Disconnected from Find My Plane");
-        $("#findmyplaneIdentLabel").text("N/A");
+        $("#findmyplaneIdentLabel").text("N/A").attr('style', 'color: red');
         $("#findmyplaneFollowingUrlLabel").html("N/A");
     }
     
