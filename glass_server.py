@@ -118,7 +118,7 @@ def flask_thread_func(threadname):
     def findmyplane_set_status(status_to_set = "CHECK"):
 
         # Returns the current status, the public ident and the URL link through a GET request
-        if status_to_set.upper() == "CHECK"
+        if status_to_set.upper() == "CHECK":
             return jsonify({'status': findmyplane_plugin.connection_status(),
                             'ident_public_key': findmyplane_plugin.ident_public_key,
                             'url_to_view': findmyplane_plugin.url_to_view()
