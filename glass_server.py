@@ -8,6 +8,7 @@ import socket
 import asyncio
 from threading import Thread
 import datetime
+import findmyplane_plugin
 
 print (socket.gethostbyname(socket.gethostname()))
 
