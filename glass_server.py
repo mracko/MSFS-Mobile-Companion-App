@@ -316,8 +316,6 @@ def simconnect_thread_func(threadname):
         ui_friendly_dictionary["AMBIENT_VISIBILITY"] = round(await aq.get("AMBIENT_VISIBILITY"),0)
         ui_friendly_dictionary["AMBIENT_WIND_VELOCITY"] = round(await aq.get("AMBIENT_WIND_VELOCITY"),0)
         ui_friendly_dictionary["AMBIENT_WIND_DIRECTION"] = round(await aq.get("AMBIENT_WIND_DIRECTION"),0)
-        ui_friendly_dictionary["AIRCRAFT_WIND_X"] = round(await aq.get("AIRCRAFT_WIND_X"),0)
-        ui_friendly_dictionary["AIRCRAFT_WIND_Z"] = round(await aq.get("AIRCRAFT_WIND_Z"),0)
         
         # Other
         
