@@ -107,6 +107,8 @@ let structural_deice;
 let ambient_temperature;
 let ambient_pressure;
 let ambient_visibility;
+let ambient_visibility_m;
+let ambient_visibility_mi;
 let sea_level_pressure;
 let ambient_wind_direction;
 let ambient_wind_velocity;
@@ -694,15 +696,15 @@ function getSimulatorData() {
 		landing_t3 = data.LANDING_T3;
 		sim_rate = data.SIMULATION_RATE;
 	    
-	    	//Weather
+		//Weather
 		ambient_temperature = data.AMBIENT_TEMPERATURE;
 		ambient_pressure = data.AMBIENT_PRESSURE;
 		ambient_visibility = data.AMBIENT_VISIBILITY;
 		ambient_wind_direction = data.AMBIENT_WIND_DIRECTION;
 		ambient_wind_velocity = data.AMBIENT_WIND_VELOCITY;
 		sea_level_pressure = data.SEA_LEVEL_PRESSURE;
-		aircraft_wind_x = data.AIRCRAFT_WIND_X;
-		aircraft_wind_z = data.AIRCRAFT_WIND_Z;
+		// aircraft_wind_x = data.AIRCRAFT_WIND_X;
+		// aircraft_wind_z = data.AIRCRAFT_WIND_Z;
     });
     return false;
 }
@@ -780,11 +782,39 @@ function displayData() {
 	$("#sim-rate").text(sim_rate);
 	
 	//WX
-	$("#ambient-temperature").text(ambient_temperature);
-	$("#ambient-pressure").text(ambient_pressure);
-	$("#sea-level-pressure").text(sea_level_pressure);
-	$("#ambient-visibility").text(ambient_visibility);
+	$("#ambient-temperature_C").text(ambient_temperature);
+	$("#ambient-temperature_F").text(Math.round(ambient_temperature * (9/5) + 32));
+	$("#ambient-pressure_inHg").text(ambient_pressure);
+	$("#ambient-pressure_mbar").text(Math.round(ambient_pressure * 33.8639));
+	$("#sea-level-pressure_inHg").text(Math.round(((sea_level_pressure / 33.8639) + Number.EPSILON) * 100) / 100);
+	$("#sea-level-pressure_mbar").text(sea_level_pressure);
+
+	// Ambient visibility in meters (4 digits, 0000 < 50m, 9999 >= 10000m)
+	if(ambient_visibility < 50){
+		ambient_visibility_m = "0000";
+	} else if(ambient_visibility >= 10000){
+		ambient_visibility_m = "9999";
+	} else {
+		ambient_visibility_m = ("000" + ambient_visibility).slice(-4);
+	}
+	$("#ambient-visibility_m").text(ambient_visibility_m);
+	$("#ambient-visibility_mi").text(Math.round(ambient_visibility / 1609));
 	$("#ambient-wind-direction").text(ambient_wind_direction);
+
+	// Cross- and headwind calc
+	aircraft_wind_x = Math.round(Math.sin(((ambient_wind_direction - compass + 360) % 360) / 57.2957795) * ambient_wind_velocity)
+	aircraft_wind_z = Math.round(Math.cos(((ambient_wind_direction - compass + 360) % 360) / 57.2957795) * ambient_wind_velocity)
+	if(aircraft_wind_x < 0){
+		aircraft_wind_x = document.createTextNode("\u2190 " + Math.abs(aircraft_wind_x))
+	} else {
+		aircraft_wind_x = document.createTextNode("\u2192 " + Math.abs(aircraft_wind_x))
+	}
+	if(aircraft_wind_z < 0){
+		aircraft_wind_z = document.createTextNode("\u2193 " + Math.abs(aircraft_wind_z))
+	} else {
+		aircraft_wind_z = document.createTextNode("\u2191 " + Math.abs(aircraft_wind_z))
+	}
+
 	$("#aircraft-wind-x").text(aircraft_wind_x);
 	$("#aircraft-wind-z").text(aircraft_wind_z);
 	$(".weather-rose-north .weather-needle").css({transform: "rotate(" + ambient_wind_direction + "deg)"});
