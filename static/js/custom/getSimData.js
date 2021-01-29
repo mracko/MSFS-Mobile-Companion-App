@@ -804,17 +804,17 @@ function displayData() {
 	$("#ambient-wind-direction").text(ambient_wind_direction);
 
 	// Cross- and headwind calc
-	aircraft_wind_x = Math.round(Math.sin(((ambient_wind_direction - compass + 360) % 360) / 57.2957795) * ambient_wind_velocity)
-	aircraft_wind_z = Math.round(Math.cos(((ambient_wind_direction - compass + 360) % 360) / 57.2957795) * ambient_wind_velocity)
+	aircraft_wind_x = Math.round(Math.sin(((ambient_wind_direction - compass + 360) % 360) / 57.2957795) * ambient_wind_velocity);
+	aircraft_wind_z = Math.round(Math.cos(((ambient_wind_direction - compass + 360) % 360) / 57.2957795) * ambient_wind_velocity);
 	if(aircraft_wind_x < 0){
-		aircraft_wind_x = document.createTextNode("\u2190 " + Math.abs(aircraft_wind_x)).getContent()
+		aircraft_wind_x = document.createTextNode("\u2190 " + Math.abs(aircraft_wind_x)).getContent();
 	} else {
-		aircraft_wind_x = document.createTextNode("\u2192 " + Math.abs(aircraft_wind_x)).getContent()
+		aircraft_wind_x = document.createTextNode("\u2192 " + Math.abs(aircraft_wind_x)).getContent();
 	}
 	if(aircraft_wind_z < 0){
-		aircraft_wind_z = document.createTextNode("\u2193 " + Math.abs(aircraft_wind_z))
+		aircraft_wind_z = document.createTextNode("\u2193 " + Math.abs(aircraft_wind_z));
 	} else {
-		aircraft_wind_z = document.createTextNode("\u2191 " + Math.abs(aircraft_wind_z))
+		aircraft_wind_z = document.createTextNode("\u2191 " + Math.abs(aircraft_wind_z));
 	}
 
 	$("#aircraft-wind-x").text(aircraft_wind_x);
