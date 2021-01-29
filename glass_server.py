@@ -340,14 +340,14 @@ def simconnect_thread_func(threadname):
         ui_friendly_dictionary["TITLE"] = await aq.get("TITLE")
         ui_friendly_dictionary["ATC_ID"] = await aq.get("ATC_ID")
 
-        if ui_friendly_dictionary["TITLE"] is not None:
+        try:
             ui_friendly_dictionary["TITLE"] = ui_friendly_dictionary["TITLE"].decode("utf-8")
-
-        if ui_friendly_dictionary["ATC_ID"] is not None:
             ui_friendly_dictionary["ATC_ID"] = ui_friendly_dictionary["ATC_ID"].decode("utf-8")
+        except:
+            pass
 
-        
-        
+
+
         # Current altitude
         current_alt = await aq.get("INDICATED_ALTITUDE")
         if current_alt > -300:

@@ -44,5 +44,5 @@ function startFindmyplaneTracking() {
 function stopFindmyplaneTracking() {
 
     window.alert("Pass")
-    
+
 }
