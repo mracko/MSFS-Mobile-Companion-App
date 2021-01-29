@@ -13,7 +13,7 @@
                         <button onclick="toggleFindmyplaneTracking(); $(this).blur();" id="findmyplaneMaster" type="button" class="btn mt-3 btn-block btn-danger btn-lg">?</button>
 						
 						<br>
-						<p class="font-italic text-secondary" style="margin-bottom:0px">MSFS Mobile Companion App integrates with <a href="https://findmyplane.live/" target="blank">Find My Plane</a> to allow you to view your flight location online with other players.</p>
+						<p class="font-italic text-secondary" style="margin-bottom:0px">MSFS Mobile Companion App integrates with <a href="https://findmyplane.live/" target="blank">Find My Plane</a> to allow you to view your flight location online with other pilots. Just use the ident code below on the website or click the link.</p>
 						<hr class="bg-secondary" style="margin-bottom:5px">
 
 
@@ -32,7 +32,8 @@
 
 							<div class="col" style="margin-top:20px; max-width:332px; min-width:400px;">
 
-								<p style="margin-bottom:0px">Live link: <span id="findmyplaneFollowingUrlLabel">?</span></p>
+								<button onclick="goToTrackingUrl()" id="findmyplaneFollowingUrlButton" type="button" class="btn btn-primary" style="width:300px; color:white"><span style="color: white" id="findmyplaneFollowingUrlLabel"></span></button><br>
+
 								<p> </p>
 
 							</div>

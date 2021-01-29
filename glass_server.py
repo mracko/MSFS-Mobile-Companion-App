@@ -47,7 +47,6 @@ def flask_thread_func(threadname):
                 title = ui_friendly_dictionary["TITLE"],
                 atc_id = ui_friendly_dictionary["ATC_ID"]
             )
-            print ("Data sent to findmyplane")
 
         return jsonify(ui_friendly_dictionary)
 
@@ -149,7 +148,6 @@ def flask_thread_func(threadname):
         if status_to_set.lower() == "connected":
             findmyplane_connection_attempt = findmyplane_plugin.request_new_plane_instance(client="Mobile Companion App") #Let me know if you are happy with this client description
             if findmyplane_connection_attempt['status'] == "success":
-                print ("success")
                 return jsonify({
                     'status': 'connected',
                     'ident_public_key': findmyplane_plugin.ident_public_key,
@@ -157,7 +155,6 @@ def flask_thread_func(threadname):
                     'url_to_view': findmyplane_plugin.url_to_view()
                 })
             else:
-                print ("failed")
                 return jsonify({'status': 'error'})
 
         return jsonify({'status': 'error', 'reason': 'no valid command passed'})

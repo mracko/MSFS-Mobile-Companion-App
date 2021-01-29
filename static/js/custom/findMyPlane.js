@@ -14,13 +14,16 @@ function findmyplaneUpdateDisplay() {
         $("#findmyplaneMenuButton").removeClass("btn-danger").addClass("btn-success");
         $("#findmyplaneConnectionStatusLabel").text("Connected to Find My Plane");
         $("#findmyplaneIdentLabel").text(findmyplaneIdentPublicKey).attr('style', 'color: green');
-        $("#findmyplaneFollowingUrlLabel").html('<a href="'+findmyplaneUrlToView+'">'+findmyplaneUrlToView+'</a>');
+        $("#findmyplaneFollowingUrlButton").show();
+        $("#findmyplaneFollowingUrlLabel").html(findmyplaneUrlToView);
     } else {
         $("#findmyplaneMaster").addClass("btn-danger").removeClass("btn-success").html("Disconnected - click to connect");
         $("#findmyplaneMenuButton").addClass("btn-danger").removeClass("btn-success")
         $("#findmyplaneConnectionStatusLabel").text("Disconnected from Find My Plane");
         $("#findmyplaneIdentLabel").text("N/A").attr('style', 'color: red');
         $("#findmyplaneFollowingUrlLabel").html("N/A");
+        $("#findmyplaneFollowingUrlButton").hide();
+
     }
     
 }
@@ -44,4 +47,10 @@ function startFindmyplaneTracking() {
 
 function stopFindmyplaneTracking() {
     $.getJSON($SCRIPT_ROOT + '/findmyplane/status/set/disconnected', {}, function(data) {});
+}
+
+function goToTrackingUrl() {
+
+    window.open(findmyplaneUrlToView,"blank")
+
 }
