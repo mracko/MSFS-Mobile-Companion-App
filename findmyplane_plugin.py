@@ -61,7 +61,7 @@ def disconnect_from_plane_instance():
     first_datapoint = True
 
 
-def set_plane_location(current_latitude, current_longitude, current_compass, current_altitude, current_speed = None):
+def set_plane_location(current_latitude, current_longitude, current_compass, current_altitude, current_speed = None, title = None, atc_id = None):
 
     if connection_status() != "connected":
         return "error: not connected"
@@ -76,7 +76,9 @@ def set_plane_location(current_latitude, current_longitude, current_compass, cur
               'current_latitude': current_latitude,
               'current_longitude': current_longitude,
               'current_compass': current_compass,
-              'current_altitude': current_altitude}
+              'current_altitude': current_altitude,
+              'title': title,
+              'atc_id': atc_id}
 
     if current_speed is not None: values['current_speed'] = current_speed
 

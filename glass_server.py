@@ -43,7 +43,9 @@ def flask_thread_func(threadname):
                 current_longitude = ui_friendly_dictionary["LONGITUDE"],
                 current_compass = ui_friendly_dictionary["MAGNETIC_COMPASS"],
                 current_altitude = ui_friendly_dictionary["INDICATED_ALTITUDE"],
-                current_speed = ui_friendly_dictionary["AIRSPEED_INDICATED"]
+                current_speed = ui_friendly_dictionary["AIRSPEED_INDICATED"],
+                title = ui_friendly_dictionary["TITLE"],
+                atc_id = ui_friendly_dictionary["ATC_ID"]
             )
             print ("Data sent to findmyplane")
 
@@ -333,6 +335,10 @@ def simconnect_thread_func(threadname):
         #ui_friendly_dictionary["PANEL_ANTI_ICE_SWITCH"] = await aq.get("PANEL_ANTI_ICE_SWITCH")
         # Sim Rate
         ui_friendly_dictionary["SIMULATION_RATE"] = await aq.get("SIMULATION_RATE")
+        # Aircraft details
+        ui_friendly_dictionary["TITLE"] = await aq.get("TITLE")
+        ui_friendly_dictionary["ATC_ID"] = await aq.get("ATC_ID")
+
         
         
         # Current altitude
