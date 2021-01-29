@@ -683,6 +683,11 @@ function getSimulatorData() {
 		landing_vs3 = data.LANDING_VS3;
 		landing_t3 = data.LANDING_T3;
 		sim_rate = data.SIMULATION_RATE;
+
+		//FindMyPlane
+		findmyplaneConnectionStatus = data.nonsimvar_findmyplane_connection_status;
+		findmyplaneIdentPublicKey = data.nonsimvar_findmyplane_ident_public_key;
+		findmyplaneUrlToView = data.nonsimvar_findmyplane_url_to_view;
     });
     return false;
 }
@@ -758,6 +763,10 @@ function displayData() {
 	$("#landing-vs3").text(landing_vs3);
 	$("#landing-t3").text(landing_t3);
 	$("#sim-rate").text(sim_rate);
+
+	//Findmyplane
+	findmyplaneUpdateDisplay()
+
 }
 
 function checkAndUpdateButton(buttonName, variableToCheck, onText="On", offText="Off") {

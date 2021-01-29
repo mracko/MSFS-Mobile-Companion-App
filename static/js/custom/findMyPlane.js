@@ -1,48 +1,46 @@
 let findmyplaneConnectionStatus;
 let findmyplaneIdentPublicKey;
-let findmyplaneLinkURL;
+let findmyplaneUrlToView;
 
-findmyplaneConnectionStatus = "disconnected";
+findmyplaneConnectionStatus = 0;
+
+
+function findmyplaneUpdateDisplay() {
+
+    console.log (findmyplaneConnectionStatus)
+    if (findmyplaneConnectionStatus === 1) {
+        $("#findmyplaneMaster").removeClass("btn-danger").addClass("btn-success").html("Connected to Find My Plane");
+        $("#findmyplaneMenuButton").removeClass("btn-danger").addClass("btn-success")
+        $("#findmyplaneConnectionStatusLabel").text("Connected to Find My Plane");
+        $("#findmyplaneIdentLabel").text(findmyplaneIdentPublicKey);
+        $("#findmyplaneFollowingUrlLabel").html('<a href="'+findmyplaneUrlToView+'">'+findmyplaneUrlToView+'</a>');
+    } else {
+        $("#findmyplaneMaster").addClass("btn-danger").removeClass("btn-success").html("Disconnected - click to connect");
+        $("#findmyplaneMenuButton").addClass("btn-danger").removeClass("btn-success")
+        $("#findmyplaneConnectionStatusLabel").text("Disconnected from Find My Plane");
+        $("#findmyplaneIdentLabel").text("N/A");
+        $("#findmyplaneFollowingUrlLabel").html("N/A");
+    }
+    
+}
 
 function toggleFindmyplaneTracking() {
 
-    if (findmyplaneConnectionStatus === "disconnected") {
+    console.log("Change triggered")
+    if (findmyplaneConnectionStatus === 0) {
         startFindmyplaneTracking()
-    }
-
-    if (findmyplaneConnectionStatus === "connected") {
+    } else {
         stopFindmyplaneTracking()
     }
 
 }
 
+
 function startFindmyplaneTracking() {
-    $.getJSON($SCRIPT_ROOT + '/findmyplane/status/set/connected', {}, function(data) {
-        if (data.status === 'connected') {
-            findmyplaneConnectionStatus = 'connected';
-            findmyplaneIdentPublicKey = data.ident_public_key;
-            findmyplaneLinkURL = data.url_to_view;
-
-            checkAndUpdateButton("#findmyplaneMaster", 1, "Connected", "Disconnected")
-
-            //$("findmyplaneConnectionStatus").html = "Connected"
-
-            window.alert("Connected")
-        }
-
-        if (data.status === 'error') {
-            findmyplaneConnectionStatus = 'disconnected'
-
-            checkAndUpdateButton("#findmyplaneMaster", 0)
-            window.alert("Errored")
-        }
-    });
+    $.getJSON($SCRIPT_ROOT + '/findmyplane/status/set/connected', {}, function(data) {});
 }
 
 
-
 function stopFindmyplaneTracking() {
-
-    window.alert("Pass")
-
+    $.getJSON($SCRIPT_ROOT + '/findmyplane/status/set/disconnected', {}, function(data) {});
 }

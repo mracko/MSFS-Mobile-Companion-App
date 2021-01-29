@@ -9,16 +9,16 @@
 					<!-- Findmyplane details -->
 					<div class="col" style="margin-top:20px">
 
-                        <div class="lead" style="margin-bottom:-15px">Online tracking with Find My Plane</div>
-                        <button onclick="" id="findmyplaneMaster" type="button" class="btn mt-3 btn-block btn-danger btn-lg">Disconnected</button>
+                        <div class="lead" style="margin-bottom:-15px">Online tracking with Find My Plane</div><br>
+                        <button onclick="toggleFindmyplaneTracking(); $(this).blur();" id="findmyplaneMaster" type="button" class="btn mt-3 btn-block btn-danger btn-lg">?</button>
                         <hr class="bg-secondary" style="margin-bottom:5px">
 
 
                         <div class="lead" style="margin-bottom:10px">Online tracking status</div>
 
-						<p style="margin-bottom:0px">Connection status: <span id="findmyplaneConnectionStatus">Disconnected</span></p>
-                        <p style="margin-bottom:0px">IDENT: <span id="findmyplaneIdent">N/A</span></p>
-                        <p style="margin-bottom:0px">Following Link: <span id="findmyplaneFollowingURL">N/A</span></p>
+						<p style="margin-bottom:0px">Connection status: <span id="findmyplaneConnectionStatusLabel">?</span></p>
+                        <p style="margin-bottom:0px">IDENT: <span id="findmyplaneIdentLabel">?</span></p>
+                        <p style="margin-bottom:0px">Following Link: <span id="findmyplaneFollowingUrlLabel">?</span></p>
                         <p> </p>
 
                         <p class="font-italic text-secondary" style="margin-bottom:0px">MSFS Mobile Companion App integrates with <a href="https://findmyplane.live/" target="blank">Find My Plane</a>to allow you to view your flight location online with other players.</p>

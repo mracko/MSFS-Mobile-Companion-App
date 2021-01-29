@@ -44,8 +44,8 @@ def flask_thread_func(threadname):
                 current_compass = ui_friendly_dictionary["MAGNETIC_COMPASS"],
                 current_altitude = ui_friendly_dictionary["INDICATED_ALTITUDE"],
                 current_speed = ui_friendly_dictionary["AIRSPEED_INDICATED"],
-                #title = ui_friendly_dictionary["TITLE"],
-                #atc_id = ui_friendly_dictionary["ATC_ID"]
+                title = ui_friendly_dictionary["TITLE"],
+                atc_id = ui_friendly_dictionary["ATC_ID"]
             )
             print ("Data sent to findmyplane")
 
@@ -130,7 +130,7 @@ def flask_thread_func(threadname):
     @app.route('/findmyplane/status/check', endpoint="check")
     @app.route('/findmyplane/status/set/<status_to_set>', endpoint="set")
     # This route allows the front end to query and set the connection status
-    def findmyplane_set_status(status_to_set = "check"):
+    def findmyplane_status(status_to_set = "check"):
 
         if request.endpoint == "check":
             return jsonify({'status': findmyplane_plugin.connection_status(),
@@ -174,7 +174,7 @@ def simconnect_thread_func(threadname):
     global value_to_use
     global sm
     global ae
-    
+
     while True:
         try:
             sm = SimConnect()
@@ -336,16 +336,25 @@ def simconnect_thread_func(threadname):
         # Sim Rate
         ui_friendly_dictionary["SIMULATION_RATE"] = await aq.get("SIMULATION_RATE")
 
-        # Aircraft details
-        ui_friendly_dictionary["TITLE"] = await aq.get("TITLE")
-        ui_friendly_dictionary["ATC_ID"] = await aq.get("ATC_ID")
+        # Get aircraft details
+        plane_title = await aq.get("TITLE")
+        atc_id = await aq.get("ATC_ID")
 
-        #try:
-        #    ui_friendly_dictionary["TITLE"] = ui_friendly_dictionary["TITLE"].decode("utf-8")
-        #    ui_friendly_dictionary["ATC_ID"] = ui_friendly_dictionary["ATC_ID"].decode("utf-8")
-        #except:
-        #    pass
+        # This is necessary because this data is returned in binary form and needs to be converted to text before it can be jsonified
+        try:
+            ui_friendly_dictionary["TITLE"] = plane_title.decode("utf-8")
+            ui_friendly_dictionary["ATC_ID"] = atc_id.decode("utf-8")
+        except:
+            pass
 
+        # The custom variables for findmyplane, all behind nonsimvar_ key to make sure they don't get in the way
+        if findmyplane_plugin.connected_to_instance == True:
+            ui_friendly_dictionary['nonsimvar_findmyplane_connection_status'] = 1
+        else:
+            ui_friendly_dictionary['nonsimvar_findmyplane_connection_status'] = 0
+
+        ui_friendly_dictionary['nonsimvar_findmyplane_ident_public_key'] = findmyplane_plugin.ident_public_key
+        ui_friendly_dictionary['nonsimvar_findmyplane_url_to_view'] = findmyplane_plugin.url_to_view()
 
 
         # Current altitude
