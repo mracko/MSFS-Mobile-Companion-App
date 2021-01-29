@@ -134,8 +134,10 @@ def flask_thread_func(threadname):
         if status_to_set.upper() == "CONNECTED":
             findmyplane_connection_attempt = findmyplane_plugin.request_new_plane_instance(client="Mobile Companion App") #Let me know if you are happy with this client description
             if findmyplane_connection_attempt['status'] == "success":
+                print ("success")
                 return jsonify({'status': 'connected'})
             else:
+                print ("failed")
                 return jsonify({'status': 'error'})
 
         return jsonify({'status': 'error', 'reason': 'no valid command passed'})
