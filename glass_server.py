@@ -310,6 +310,15 @@ def simconnect_thread_func(threadname):
                 ui_friendly_dictionary["AUTOPILOT_LOC_MODE"] = 0     
         except:
             None
+            
+        # Weather
+        
+        ui_friendly_dictionary["AMBIENT_TEMPERATURE"] = round(await aq.get("AMBIENT_TEMPERATURE"),0)
+        ui_friendly_dictionary["AMBIENT_PRESSURE"] = '{:.2f}'.format(round(await aq.get("AMBIENT_PRESSURE"),2))
+        ui_friendly_dictionary["SEA_LEVEL_PRESSURE"] = round(await aq.get("SEA_LEVEL_PRESSURE"),0)
+        ui_friendly_dictionary["AMBIENT_VISIBILITY"] = round(await aq.get("AMBIENT_VISIBILITY"),0)
+        ui_friendly_dictionary["AMBIENT_WIND_VELOCITY"] = round(await aq.get("AMBIENT_WIND_VELOCITY"),0)
+        ui_friendly_dictionary["AMBIENT_WIND_DIRECTION"] = round(await aq.get("AMBIENT_WIND_DIRECTION"),0)
         
         # Other
         

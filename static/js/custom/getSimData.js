@@ -104,6 +104,22 @@ let pitot_heat;
 let eng_anti_ice;
 let structural_deice;
 
+let ambient_temperature;
+let ambient_pressure;
+let ambient_pressure_inHg;
+let ambient_pressure_mbar;
+let ambient_visibility;
+let ambient_visibility_m;
+let ambient_visibility_mi;
+let sea_level_pressure;
+let sea_level_pressure_inHg;
+let sea_level_pressure_mbar;
+let ambient_wind_direction;
+let ambient_wind_velocity;
+let aircraft_wind_x;
+let aircraft_wind_z;
+let aircraft_wind_direction;
+
 // Maps Size Fix Function
 let map_size_fix;
 let map_size_fix_mod;
@@ -683,6 +699,14 @@ function getSimulatorData() {
 		landing_vs3 = data.LANDING_VS3;
 		landing_t3 = data.LANDING_T3;
 		sim_rate = data.SIMULATION_RATE;
+	    
+		//Weather
+		ambient_temperature = data.AMBIENT_TEMPERATURE;
+		ambient_pressure = data.AMBIENT_PRESSURE;
+		ambient_visibility = data.AMBIENT_VISIBILITY;
+		ambient_wind_direction = data.AMBIENT_WIND_DIRECTION;
+		ambient_wind_velocity = data.AMBIENT_WIND_VELOCITY;
+		sea_level_pressure = data.SEA_LEVEL_PRESSURE;
     });
     return false;
 }
@@ -758,6 +782,48 @@ function displayData() {
 	$("#landing-vs3").text(landing_vs3);
 	$("#landing-t3").text(landing_t3);
 	$("#sim-rate").text(sim_rate);
+	
+	//WX
+	$("#ambient-temperature-C").text(ambient_temperature);
+	$("#ambient-temperature-F").text(Math.round(ambient_temperature * (9/5) + 32));
+	$("#ambient-pressure-inHg").text(ambient_pressure);
+	$("#ambient-pressure-mbar").text(Math.round(ambient_pressure * 33.8639));
+	$("#sea-level-pressure-inHg").text(Math.round(((sea_level_pressure / 33.8639) + Number.EPSILON) * 100) / 100);
+	$("#sea-level-pressure-mbar").text(sea_level_pressure);
+
+	// Ambient visibility in meters (4 digits, 0000 < 50m, 9999 >= 10000m)
+	if(ambient_visibility < 50){
+		ambient_visibility_m = "0000";
+	} else if(ambient_visibility >= 10000){
+		ambient_visibility_m = "9999";
+	} else {
+		ambient_visibility_m = ("000" + ambient_visibility).slice(-4);
+	}
+	$("#ambient-visibility-m").text(ambient_visibility_m);
+	$("#ambient-visibility-mi").text(Math.round(ambient_visibility / 1609));
+	$("#ambient-wind-direction").text(ambient_wind_direction);
+
+	// Cross- and headwind calc
+	aircraft_wind_x = Math.round(Math.sin(((ambient_wind_direction - compass + 360) % 360) / 57.2957795) * ambient_wind_velocity);
+	aircraft_wind_z = Math.round(Math.cos(((ambient_wind_direction - compass + 360) % 360) / 57.2957795) * ambient_wind_velocity);
+	if(aircraft_wind_x < 0){
+		aircraft_wind_x = '\u2192' + " " + Math.abs(aircraft_wind_x);
+	} else {
+		aircraft_wind_x = '\u2190' + " " + Math.abs(aircraft_wind_x);
+	}
+	if(aircraft_wind_z < 0){
+		aircraft_wind_z = '\u2191' + " " + Math.abs(aircraft_wind_z);
+	} else {
+		aircraft_wind_z = '\u2193' + " " + Math.abs(aircraft_wind_z);
+	}
+
+	$("#aircraft-wind-x").text(aircraft_wind_x);
+	$("#aircraft-wind-z").text(aircraft_wind_z);
+	$(".weather-rose-north .weather-needle").css({transform: "rotate(" + ambient_wind_direction + "deg)"});
+	$(".weather-rose-relative .weather-needle").css({transform: "rotate(" + Math.round(ambient_wind_direction - compass) + "deg)"});
+	$(".weather-rose-north .weather-subtext").text(ambient_wind_direction + "°/" + ambient_wind_velocity);
+	$(".weather-rose-relative .weather-subtext").text(Math.round((ambient_wind_direction - compass + 360) % 360) + "°/" + ambient_wind_velocity);
+	$("#ambient-wind-velocity").text(ambient_wind_velocity);
 }
 
 function checkAndUpdateButton(buttonName, variableToCheck, onText="On", offText="Off") {
@@ -771,12 +837,12 @@ function checkAndUpdateButton(buttonName, variableToCheck, onText="On", offText=
 function toggleFollowPlane() {
     followPlane = !followPlane;
     if (followPlane === true) {
-        $("#followMode").text("Unfollow plane")
-        $("#followModeButton").removeClass("btn-danger").addClass("btn-primary")
+        $("#followMode").text("Unfollow plane");
+        $("#followModeButton").removeClass("btn-danger").addClass("btn-primary");
     }
     if (followPlane === false) {
-        $("#followMode").text("Follow plane")
-        $("#followModeButton").removeClass("btn-primary").addClass("btn-danger")
+        $("#followMode").text("Follow plane");
+        $("#followModeButton").removeClass("btn-primary").addClass("btn-danger");
     }
 }
 
