@@ -357,7 +357,7 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8; border-color:#B3B6B8; width:150px">ADF Freq (kHz)</span>
 									</div>
-									<input class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('ADF_Freq_Set').click()" inputmode="numeric" pattern="[0-9]*" id="ADF_freq" aria-label="ADF Freq" aria-describedby="ADF_freq" placeholder="-">
+									<input lang="en-US" class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('ADF_Freq_Set').click()" inputmode="decimal" pattern="[0-9]*" id="ADF_freq" aria-label="ADF Freq" aria-describedby="ADF_freq" placeholder="-">
 									<div class="input-group-append">
 										<button onclick='if (document.getElementById("ADF_freq").value <= 1799 && document.getElementById("ADF_freq").value >= 100 && document.getElementById("ADF_freq").value != "") {triggerSimEventFromField ("ADF_COMPLETE_SET", "ADF_freq", "Setting ADF"); $("#ADF_freq").val("");}; $(this).blur();sleep(3000).then(() => { syncRadio(); });' class="btn btn-warning" type="button" id="ADF_Freq_Set" style="margin-top:0px;margin-bottom:0px;" title="Set ADF frequency in kHz">Set</button>
 									</div>
