@@ -198,7 +198,7 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8; border-color:#B3B6B8; width:150px">COM 1 Freq (MHz)</span>
 									</div>
-									<input class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('COM1_Set').click()" inputmode="decimal" pattern="[0-9]*" id="COM1_freq" aria-label="COM 1 Freq" aria-describedby="COM1_freq" style="padding-left:7px;padding-right:7px" placeholder="-">
+									<input lang="en-US" class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('COM1_Set').click()" inputmode="decimal" pattern="[0-9]*" id="COM1_freq" aria-label="COM 1 Freq" aria-describedby="COM1_freq" style="padding-left:7px;padding-right:7px" placeholder="-">
 									<div class="input-group-append">
 										<button onclick='if (document.getElementById("COM1_freq").value <= 136.995 && document.getElementById("COM1_freq").value >= 118 && document.getElementById("COM1_freq").value != "") {triggerSimEventFromField ("COM_RADIO_SET", "COM1_freq", "Setting COM1");$("#COM1_freq").val("");}; $(this).blur();sleep(3000).then(() => { syncRadio(); });' class="btn btn-warning" type="button" id="COM1_Set" style="margin-top:0px;margin-bottom:0px;" title="Set COM 1 frequency in MHz">Set</button>
 									</div>
@@ -225,7 +225,7 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8; border-color:#B3B6B8; width:150px">COM 2 Freq (MHz)</span>
 									</div>
-									<input class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('COM2_Set').click()" inputmode="decimal" pattern="[0-9]*" id="COM2_freq" aria-label="COM 2 Freq" aria-describedby="COM2_freq" style="padding-left:7px;padding-right:7px" placeholder="-">
+									<input lang="en-US" class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('COM2_Set').click()" inputmode="decimal" pattern="[0-9]*" id="COM2_freq" aria-label="COM 2 Freq" aria-describedby="COM2_freq" style="padding-left:7px;padding-right:7px" placeholder="-">
 									<div class="input-group-append">
 										<button onclick='if (document.getElementById("COM2_freq").value <= 136.995 && document.getElementById("COM2_freq").value >= 118 && document.getElementById("COM2_freq").value != "") {triggerSimEventFromField ("COM2_RADIO_SET", "COM2_freq", "Setting COM2");$("#COM2_freq").val("");}; $(this).blur();sleep(3000).then(() => { syncRadio(); });' class="btn btn-warning" type="button" id="COM2_Set" style="margin-top:0px;margin-bottom:0px;" title="Set COM 2 frequency in MHz">Set</button>
 									</div>
