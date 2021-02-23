@@ -302,7 +302,7 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8; border-color:#B3B6B8; width:150px">NAV 1 OBS (Deg)</span>
 									</div>
-									<input lang="en-US" class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('OBS1_G3_Set').click()" inputmode="decimal" pattern="[0-9]*" id="OBS1_G3_heading" aria-label="OBS 1 G3000 Deg" aria-describedby="OBS1_G3_freq" placeholder="-">
+									<input lang="en-US" class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('OBS1_G3_Set').click()" inputmode="numeric" pattern="[0-9]*" id="OBS1_G3_heading" aria-label="OBS 1 G3000 Deg" aria-describedby="OBS1_G3_freq" placeholder="-">
 									<div class="input-group-append">
 										<button onclick='if (document.getElementById("OBS1_G3_heading").value <= 360 && document.getElementById("OBS1_G3_heading").value >= 0 && document.getElementById("OBS1_G3_heading").value % 1 === 0 && document.getElementById("OBS1_G3_heading").value != "") {triggerSimEventFromField ("VOR1_SET", "OBS1_G3_heading", "Setting OBS1"); $("#OBS1_G3_heading").val("");}; $(this).blur();' class="btn btn-warning" type="button" id="OBS1_G3_Set" style="margin-top:0px;margin-bottom:0px;" title="Set OBS1 heading in degrees">Set</button>
 									</div>
@@ -322,7 +322,7 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8; border-color:#B3B6B8; width:150px">NAV 2 Freq (MHz)</span>
 									</div>
-									<input class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('NAV2_Set').click()" inputmode="numeric" pattern="[0-9]*" id="NAV2_freq" aria-label="NAV 2 Freq" aria-describedby="NAV2_freq" placeholder="-">
+									<input lang="en-US" class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('NAV2_Set').click()" inputmode="decimal" pattern="[0-9]*" id="NAV2_freq" aria-label="NAV 2 Freq" aria-describedby="NAV2_freq" placeholder="-">
 									<div class="input-group-append">
 										<button onclick='if (document.getElementById("NAV2_freq").value <= 117.95 && document.getElementById("NAV2_freq").value >= 108 && document.getElementById("NAV2_freq").value != "") {triggerSimEventFromField ("NAV2_RADIO_SET", "NAV2_freq", "Setting NAV2");$("#NAV2_freq").val("");}; $(this).blur();sleep(3000).then(() => { syncRadio(); });' class="btn btn-warning" type="button" id="NAV2_Set" style="margin-top:0px;margin-bottom:0px;" title="Set NAV 2 frequency in MHz">Set</button>
 									</div>
