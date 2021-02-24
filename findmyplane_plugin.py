@@ -17,7 +17,7 @@ ident_public_key = None
 ident_private_key = None
 
 last_data_sent_timestamp = 0
-threshold_for_how_often_to_send_data = 2
+threshold_for_how_often_to_send_data = 1
 
 first_datapoint = True
 
@@ -79,7 +79,7 @@ def set_plane_location(current_latitude, current_longitude, current_compass, cur
     global last_data_sent_timestamp
     global first_datapoint
 
-    if datetime.now() - last_data_sent_timestamp < threshold_for_how_often_to_send_data:
+    if (datetime.now().timestamp() - last_data_sent_timestamp) < threshold_for_how_often_to_send_data:
         return "error: too soon to resend data"
 
     endpoint_url = "/update_plane_location"
@@ -104,7 +104,8 @@ def set_plane_location(current_latitude, current_longitude, current_compass, cur
     except:
         return "error: request failed"
 
-    last_data_sent_timestamp = datetime.now()
+    last_data_sent_timestamp = datetime.now().timestamp()
+    print ("Sent")
     return "success"
 
 
