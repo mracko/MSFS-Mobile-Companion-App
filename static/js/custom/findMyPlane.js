@@ -10,14 +10,14 @@ function findmyplaneUpdateDisplay() {
 
     console.log (findmyplaneConnectionStatus)
     if (findmyplaneConnectionStatus === 1) {
-        $("#findmyplaneMaster").removeClass("btn-danger").removeClass("btn-warning").addClass("btn-success").html("Connected to Find My Plane");
+        $("#findmyplaneMaster").removeClass("btn-danger").addClass("btn-success").html("Connected to Find My Plane");
         $("#findmyplaneMenuButton").removeClass("btn-danger").addClass("btn-success");
         $("#findmyplaneConnectionStatusLabel").text("Connected to Find My Plane");
         $("#findmyplaneIdentLabel").text(findmyplaneIdentPublicKey).attr('style', 'color: green');
         $("#findmyplaneFollowingUrlButton").show();
         $("#findmyplaneFollowingUrlLabel").html(findmyplaneUrlToView);
     } else {
-        $("#findmyplaneMaster").addClass("btn-danger").removeClass("btn-warning").removeClass("btn-success").html("Disconnected - click to connect");
+        $("#findmyplaneMaster").addClass("btn-danger").removeClass("btn-success").html("Disconnected - click to connect");
         $("#findmyplaneMenuButton").addClass("btn-danger").removeClass("btn-success")
         $("#findmyplaneConnectionStatusLabel").text("Disconnected from Find My Plane");
         $("#findmyplaneIdentLabel").text("N/A").attr('style', 'color: red');
@@ -33,11 +33,7 @@ function toggleFindmyplaneTracking() {
     console.log("Change triggered")
     if (findmyplaneConnectionStatus === 0) {
         startFindmyplaneTracking()
-
-        $("#findmyplaneMaster").removeClass("btn-danger").removeClass("btn-success").addClass('btn-warning').html('<i class="fas fa-spinner fa-spin"></i> Connecting...');
-        $("#findmyplaneConnectionStatusLabel").text("Connecting to Find My Plane...");
-
-
+        temporaryAlert("Connecting", "Attempting to connect to Find My Plane...", "info", timer = 3000)
     } else {
         stopFindmyplaneTracking()
     }
@@ -46,7 +42,10 @@ function toggleFindmyplaneTracking() {
 
 
 function startFindmyplaneTracking() {
-    $.getJSON($SCRIPT_ROOT + '/findmyplane/status/set/connected', {}, function(data) {});
+    $.getJSON($SCRIPT_ROOT + '/findmyplane/status/set/connected', {}, function(data) {
+        getSimulatorData();
+        displayData();
+    });
 }
 
 
