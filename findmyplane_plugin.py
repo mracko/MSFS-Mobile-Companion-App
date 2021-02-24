@@ -7,6 +7,7 @@
 
 
 import requests
+from datetime import datetime
 
 server_url = "https://findmyplane.live/"
 api_url = server_url + "api"
@@ -14,6 +15,9 @@ api_url = server_url + "api"
 connected_to_instance = False
 ident_public_key = None
 ident_private_key = None
+
+last_data_sent_timestamp = 0
+threshold_for_how_often_to_send_data = 2
 
 first_datapoint = True
 
@@ -23,10 +27,12 @@ def set_keys(ident_public_key_to_set, ident_private_key_to_set):
     global ident_private_key
     global connected_to_instance
     global first_datapoint
+    global last_data_sent_timestamp
 
     ident_public_key = ident_public_key_to_set
     ident_private_key = ident_private_key_to_set
     first_datapoint = True
+    last_data_sent_timestamp = 0
     connected_to_instance = True
 
 
@@ -56,11 +62,13 @@ def disconnect_from_plane_instance():
     global ident_private_key
     global connected_to_instance
     global first_datapoint
+    global last_data_sent_timestamp
 
     ident_public_key = None
     ident_private_key = None
     connected_to_instance = False
     first_datapoint = True
+    last_data_sent_timestamp = 0
 
 
 def set_plane_location(current_latitude, current_longitude, current_compass, current_altitude, current_speed=None, title=None, atc_id=None):
@@ -68,7 +76,11 @@ def set_plane_location(current_latitude, current_longitude, current_compass, cur
     if connection_status() != "connected":
         return "error: not connected"
 
+    global last_data_sent_timestamp
     global first_datapoint
+
+    if datetime.now() - last_data_sent_timestamp < threshold_for_how_often_to_send_data:
+        return "error: too soon to resend data"
 
     endpoint_url = "/update_plane_location"
     url = api_url + endpoint_url
@@ -92,6 +104,7 @@ def set_plane_location(current_latitude, current_longitude, current_compass, cur
     except:
         return "error: request failed"
 
+    last_data_sent_timestamp = datetime.now()
     return "success"
 
 
