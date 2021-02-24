@@ -44,8 +44,10 @@ def request_new_plane_instance(plane_title=None, atc_id=None, client=None):
         plane_object = r.json()
         set_keys(plane_object['ident_public_key'], plane_object['ident_private_key'])
     except:
+        print ("Error connecting to Find My Plane")
         plane_object = {'status': 'error'}
 
+    print ("Connected to Find My Plane: " + url_to_view())
     return {'status': 'success'}
 
 
