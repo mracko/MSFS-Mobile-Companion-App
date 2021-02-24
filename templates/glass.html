@@ -90,7 +90,7 @@
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseCOM" aria-expanded="false" aria-controls="collapseCOM">COM</button>
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseAP" aria-expanded="false" aria-controls="collapseAP">AP</button>
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapsePanel" aria-expanded="false" aria-controls="collapseInstruments">Panel</button>
-    <button class="btn btn-danger" onclick="$(this).blur();" id="findmyplaneMenuButton" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseFindmyplane" aria-expanded="false" aria-controls="collapseFindmyplane">Find My Plane online</button>
+    <button class="btn btn-danger" onclick="$(this).blur();" id="findmyplaneMenuButton" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseFindmyplane" aria-expanded="false" aria-controls="collapseFindmyplane">Find online</button>
     <button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther">Other</button>
 	&nbsp;&nbsp;
 </nav>
@@ -119,11 +119,11 @@
 	<!-- Panel -->
 	{% include 'menu_panel.html' %}
 
+    	<!-- Other -->
+	{% include 'menu_other.html' %}
+
     <!-- Find My Plane -->
 	{% include 'menu_findmyplane.html' %}
-
-	<!-- Other -->
-	{% include 'menu_other.html' %}
 
 </div>
 
