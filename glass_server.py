@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, redirect, url_for
 from SimConnect import *
 from time import sleep, localtime
 import random
@@ -272,6 +272,19 @@ def flask_thread_func(threadname):
                 return jsonify({'status': 'error'})
 
         return jsonify({'status': 'error', 'reason': 'no valid command passed'})
+
+    # This route redirects the user to the find my plane link online.
+    # This is necessary to do on the server side rather than client side because javascript redirects do not work
+    #correctly when it comes to loading a new page in a full-page Android / iOS app
+    @app.route('/findmyplane/link'):
+    def findmyplane_link():
+
+        # This should never happen, but if someone tries to follow a link while not connected then send them back home
+        if findmyplane_plugin.connection_status() == "disconnected":
+            return redirect(url_for('index'))
+
+        # Otherwise send them to where they need to go
+        return redirect(findmyplane_plugin.url_to_view())
 
     # END: Find my plane routes
 
