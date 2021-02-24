@@ -51,6 +51,18 @@ function stopFindmyplaneTracking() {
 
 function goToTrackingUrl() {
 
-    window.open(findmyplaneUrlToView,"blank")
+    // This code is pretty ugly but it does allow this to open in another window through javascript
+    // See this stackoverflow answer to show what I'm doing
+    // https://stackoverflow.com/questions/7930001/force-link-to-open-in-mobile-safari-from-a-web-app-with-javascript
+    var a = document.createElement('a');
+    a.setAttribute("href", findmyplaneUrlToView);
+    a.setAttribute("target", "_blank");
+
+    var dispatch = document.createEvent("HTMLEvents");
+    dispatch.initEvent("click", true, true);
+    a.dispatchEvent(dispatch);
+
+    // This is the old way of doing it - kept here for reference
+    //window.open(findmyplaneUrlToView,"_blank")
 
 }
