@@ -3,7 +3,7 @@ let findmyplaneIdentPublicKey;
 let findmyplaneUrlToView;
 
 findmyplaneConnectionStatus = 0;
-startFindmyplaneTracking();
+//startFindmyplaneTracking();  //no longer default
 
 
 function findmyplaneUpdateDisplay() {
