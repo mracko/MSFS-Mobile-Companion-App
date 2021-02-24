@@ -105,7 +105,6 @@ def set_plane_location(current_latitude, current_longitude, current_compass, cur
         return "error: request failed"
 
     last_data_sent_timestamp = datetime.now().timestamp()
-    print ("Sent")
     return "success"
 
 
