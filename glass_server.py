@@ -8,6 +8,7 @@ import socket
 import asyncio
 from threading import Thread
 import datetime
+import findmyplane_plugin
 
 print (socket.gethostbyname(socket.gethostname()))
 
@@ -35,6 +36,19 @@ def flask_thread_func(threadname):
     def output_ui_variables():
         # Initialise dictionaru
         ui_friendly_dictionary["STATUS"] = "success"
+
+        # Find my plane addition - send if activated
+        if findmyplane_plugin.connection_status() == "connected":
+            findmyplane_plugin.set_plane_location(
+                current_latitude = ui_friendly_dictionary["LATITUDE"],
+                current_longitude = ui_friendly_dictionary["LONGITUDE"],
+                current_compass = ui_friendly_dictionary["MAGNETIC_COMPASS"],
+                current_altitude = ui_friendly_dictionary["INDICATED_ALTITUDE"],
+                current_speed = ui_friendly_dictionary["AIRSPEED_INDICATED"],
+                title = ui_friendly_dictionary["TITLE"],
+                atc_id = ui_friendly_dictionary["ATC_ID"]
+            )
+
         return jsonify(ui_friendly_dictionary)
 
     @app.route('/')
@@ -223,8 +237,45 @@ def flask_thread_func(threadname):
             success = "Error loading flight plan"
         
         return success
-    
-    app.run(host='0.0.0.0', port=4000, debug=False)
+
+    # START: Find my plane routes
+
+    @app.route('/findmyplane/status/check', endpoint="check")
+    @app.route('/findmyplane/status/set/<status_to_set>', endpoint="set")
+    # This route allows the front end to query and set the connection status
+    def findmyplane_status(status_to_set = "check"):
+
+        if request.endpoint == "check":
+            return jsonify({'status': findmyplane_plugin.connection_status(),
+                            'ident_public_key': findmyplane_plugin.ident_public_key,
+                            'ident_private_key': findmyplane_plugin.ident_private_key,
+                            'url_to_view': findmyplane_plugin.url_to_view()
+                            })
+
+        # Allows the front end to set the connection status. Passing "connected" will create a new plane instance.
+        # Passing "disconnected" will disconnect from the instance, which will prompt the server to delete it in due
+        # course if it doesn't receive more data.
+        if status_to_set.lower() == "disconnected":
+            findmyplane_plugin.disconnect_from_plane_instance()
+            return jsonify({'status': 'disconnected'})
+
+        if status_to_set.lower() == "connected":
+            findmyplane_connection_attempt = findmyplane_plugin.request_new_plane_instance(client="Mobile Companion App") #Let me know if you are happy with this client description
+            if findmyplane_connection_attempt['status'] == "success":
+                return jsonify({
+                    'status': 'connected',
+                    'ident_public_key': findmyplane_plugin.ident_public_key,
+                    'ident_private_key': findmyplane_plugin.ident_private_key,
+                    'url_to_view': findmyplane_plugin.url_to_view()
+                })
+            else:
+                return jsonify({'status': 'error'})
+
+        return jsonify({'status': 'error', 'reason': 'no valid command passed'})
+
+    # END: Find my plane routes
+
+    app.run(host='0.0.0.0', port=4000, debug=False, use_reloader=False)
 
 # SimConnect  App
 def simconnect_thread_func(threadname):
@@ -234,7 +285,7 @@ def simconnect_thread_func(threadname):
     global value_to_use
     global sm
     global ae
-    
+
     while True:
         try:
             sm = SimConnect()
@@ -398,7 +449,28 @@ def simconnect_thread_func(threadname):
         # GPS Next Waypoint
         ui_friendly_dictionary["NEXT_WP_LAT"] = await aq.get("GPS_WP_NEXT_LAT")
         ui_friendly_dictionary["NEXT_WP_LON"] = await aq.get("GPS_WP_NEXT_LON")
-        
+
+        # Get aircraft details
+        plane_title = await aq.get("TITLE")
+        atc_id = await aq.get("ATC_ID")
+
+        # This is necessary because this data is returned in binary form and needs to be converted to text before it can be jsonified
+        try:
+            ui_friendly_dictionary["TITLE"] = plane_title.decode("utf-8")
+            ui_friendly_dictionary["ATC_ID"] = atc_id.decode("utf-8")
+        except:
+            pass
+
+        # The custom variables for findmyplane, all behind nonsimvar_ key to make sure they don't get in the way
+        if findmyplane_plugin.connected_to_instance == True:
+            ui_friendly_dictionary['nonsimvar_findmyplane_connection_status'] = 1
+        else:
+            ui_friendly_dictionary['nonsimvar_findmyplane_connection_status'] = 0
+
+        ui_friendly_dictionary['nonsimvar_findmyplane_ident_public_key'] = findmyplane_plugin.ident_public_key
+        ui_friendly_dictionary['nonsimvar_findmyplane_url_to_view'] = findmyplane_plugin.url_to_view()
+
+
         # Current altitude
         current_alt = await aq.get("INDICATED_ALTITUDE")
         if current_alt > -300:
@@ -445,7 +517,7 @@ def simconnect_thread_func(threadname):
             ui_friendly_dictionary["LANDING_T2"] = landing_t2
             ui_friendly_dictionary["LANDING_VS3"] = landing_vs3
             ui_friendly_dictionary["LANDING_T3"] = landing_t3
-        
+
     while True:
         asyncio.run(ui_dictionary(ui_friendly_dictionary, previous_alt, ui_friendly_dictionary["LANDING_T1"], ui_friendly_dictionary["LANDING_VS1"], ui_friendly_dictionary["LANDING_T2"], ui_friendly_dictionary["LANDING_VS2"], ui_friendly_dictionary["LANDING_T3"], ui_friendly_dictionary["LANDING_VS3"]))
         #sleep(0.3)
