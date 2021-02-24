@@ -276,7 +276,7 @@ def flask_thread_func(threadname):
     # This route redirects the user to the find my plane link online.
     # This is necessary to do on the server side rather than client side because javascript redirects do not work
     #correctly when it comes to loading a new page in a full-page Android / iOS app
-    @app.route('/findmyplane/link'):
+    @app.route('/findmyplane/link')
     def findmyplane_link():
 
         # This should never happen, but if someone tries to follow a link while not connected then send them back home
@@ -288,7 +288,7 @@ def flask_thread_func(threadname):
 
     # END: Find my plane routes
 
-    app.run(host='0.0.0.0', port=4000, debug=False, use_reloader=False)
+    app.run(host='0.0.0.0', port=4000, debug=True, use_reloader=False)
 
 # SimConnect  App
 def simconnect_thread_func(threadname):
