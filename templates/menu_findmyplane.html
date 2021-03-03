@@ -1,0 +1,45 @@
+	<div class="collapse" id="collapseFindmyplane" data-parent="#myGroup">
+		<div class="card bg-dark text-white" style="margin-top:10px;margin-bottom:12px;">
+			<div class="card-body">
+
+
+				<!-- First Row-->
+				<div class="row" style="margin-top:-23px">
+
+					<!-- Findmyplane details -->
+					<div class="col" style="margin-top:20px">
+
+                        <div class="lead" style="margin-bottom:-15px">Online tracking with Find My Plane</div><br>
+                        <button onclick="toggleFindmyplaneTracking(); $(this).blur();" id="findmyplaneMaster" type="button" class="btn mt-3 btn-block btn-danger btn-lg">?</button>
+						
+						<br>
+						<p class="font-italic text-secondary" style="margin-bottom:0px">MSFS Mobile Companion App integrates with <a href="https://findmyplane.live/" target="blank">Find My Plane</a> to allow you to view your flight location online with other pilots. Start tracking and use the ident code below on the website or click the link.</p>
+						<hr class="bg-secondary" style="margin-bottom:5px">
+
+
+
+						<div class="lead" style="margin-bottom:10px">Online tracking status</div>
+
+						<div class="row">
+							<div class="col" style="margin-top:20px; max-width:332px; min-width:332px;">
+
+								<div class="btn-group" role="group" aria-label="IDENT ">
+									<button type="button" class="btn btn-light" style="width:50px; padding:0px" disabled>IDENT </button>
+									<button type="button" class="btn btn-secondary" style="background-color:#000000;width:150px;opacity:1" disabled><strong><span style="color:red" id="findmyplaneIdentLabel">?</span></strong></button>
+								</div>
+							</div>
+							
+
+							<div class="col" style="margin-top:20px; max-width:332px; min-width:400px;">
+								<a href="{{ url_for('findmyplane_link') }}" target="_blank" id="findmyplaneFollowingUrlButton" type="button" class="btn btn-primary" style="width:300px; color:white"><span style="color: white" id="findmyplaneFollowingUrlLabel"></span></a><br>
+								<p> </p>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>

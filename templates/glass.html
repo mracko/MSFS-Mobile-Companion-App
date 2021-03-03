@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -90,8 +90,9 @@
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseCOM" aria-expanded="false" aria-controls="collapseCOM">COM</button>
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseAP" aria-expanded="false" aria-controls="collapseAP">AP</button>
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapsePanel" aria-expanded="false" aria-controls="collapseInstruments">Panel</button>
-	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther">Other</button>
-	&nbsp;&nbsp;
+    <button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther">Other</button>
+    <button class="btn btn-danger" onclick="$(this).blur();" id="findmyplaneMenuButton" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseFindmyplane" aria-expanded="false" aria-controls="collapseFindmyplane">Find online</button>
+    &nbsp;&nbsp;
 </nav>
 
 <div class="container-fluid bg-secondary" id="myGroup" style="margin-bottom:0px">
@@ -118,8 +119,11 @@
 	<!-- Panel -->
 	{% include 'menu_panel.html' %}
 
-	<!-- Other -->
+    	<!-- Other -->
 	{% include 'menu_other.html' %}
+
+    <!-- Find My Plane -->
+	{% include 'menu_findmyplane.html' %}
 
 </div>
 
@@ -262,6 +266,7 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <!-- Custom JS imports -->
+<script src="/static/js/custom/findMyPlane.js"></script>
 <script src="/static/js/custom/getSimData.js?v15"></script>
 
 <!-- Sync Frequencies at Startup-->
