@@ -467,6 +467,10 @@ def simconnect_thread_func(threadname):
         
         current_landing = round(await aq.get("PLANE_TOUCHDOWN_NORMAL_VELOCITY") * 60)
         current_time = datetime.datetime.now().strftime('%H:%M:%S')
+
+        #Gear Lever position
+
+        ui_friendly_dictionary["GEAR_HANDLE_POSITION"] = await aq.get("GEAR_HANDLE_POSITION")
         
         if landing_vs1 != current_landing:
             # Move 2nd to 3rd
